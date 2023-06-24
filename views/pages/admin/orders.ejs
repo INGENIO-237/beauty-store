@@ -1,0 +1,62 @@
+<div class="container album py-5 bg-body-tertiary">
+  <div class="row">
+    <% if(orders){ %><% orders.forEach((order) => { %>
+    <div class="col-lg-3 col-md-3 mb-3">
+      <div class="card h-100">
+        <div class="card-header pb-0">
+          <h6>Order #<%= order.orderdate %></h6>
+        </div>
+        <div class="card-body p-3">
+          <div class="timeline timeline-one-side">
+            <div class="timeline-block mb-3">
+              <span class="timeline-step">
+                <i class="ni ni-credit-card text-warning text-gradient"></i>
+              </span>
+              <div class="timeline-content">
+                <h6 class="text-dark text-sm font-weight-bold mb-0">
+                  Customer
+                </h6>
+                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                  <%= order.customerfullname %>
+                </p>
+              </div>
+            </div>
+            <div class="timeline-block mb-3">
+              <span class="timeline-step">
+                <i class="ni ni-key-25 text-primary text-gradient"></i>
+              </span>
+              <div class="timeline-content">
+                <h6 class="text-dark text-sm font-weight-bold mb-0">Address</h6>
+                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                  <%= order.customeraddress %>
+                </p>
+              </div>
+            </div>
+            <div class="timeline-block">
+              <span class="timeline-step">
+                <i class="ni ni-money-coins text-dark text-gradient"></i>
+              </span>
+              <div class="timeline-content">
+                <h6 class="text-dark text-sm font-weight-bold mb-0">Status</h6>
+                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                  <% if(order.orderdelivered == 0){ %>
+                  <span class="text-danger">Pending</span>
+                  <% }else{ %>
+                  <span class="text-success">Delivered</span>
+                  <% } %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a href="/orders/<%= order.id_cmd %>" class="btn btn-info">See more</a>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+    <% }else{ %>
+      <p>No orders placed yet</p>
+    <% } %>
+  </div>
+</div>

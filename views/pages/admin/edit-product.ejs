@@ -1,0 +1,77 @@
+<div class="container d-flex justify-content-center">
+  <form role="form" class="col-md-6" action="" method="post" enctype="multipart/form-data">
+    <h2>Edit Product</h2>
+    <label>Title</label>
+    <div class="mb-3">
+      <input
+        type="text"
+        name="title"
+        value="<%= product.articletitle %>"
+        class="form-control"
+        placeholder="Title"
+        aria-label="Title"
+        aria-describedby="title-addon"
+      />
+    </div>
+    <label>Category</label>
+    <div class="mb-3">
+      <select
+        name="category"
+        class="form-control"
+        placeholder="Category"
+        aria-label="Category"
+        aria-describedby="category-addon"
+      >
+        <option value="<%= product.id_cat %>">
+          <%= product.cattitle %>
+        </option>
+        <% for(let i = 0; i < categories.length; i++){ %> <%
+        if(categories[i].id_cat != product.id_cat){ %>
+        <option value="<%= categories[i].id_cat %>">
+          <%= categories[i].cattitle %>
+        </option>
+        <% } %> <% } %>
+      </select>
+    </div>
+    <label>Description</label>
+    <div class="mb-3">
+      <textarea
+        name="description"
+        value="<%= product.desc_art %>"
+        cols="30"
+        rows="4"
+        class="form-control"
+        placeholder="Description"
+        aria-label="Description"
+        aria-describedby="description-addon"
+      ></textarea>
+    </div>
+    <label>Price</label>
+    <div class="mb-3">
+      <input
+        name="price"
+        value="<%= product.articleprice %>"
+        type="text"
+        class="form-control"
+        placeholder="Price"
+        aria-label="Price"
+        aria-describedby="price-addon"
+      />
+    </div>
+    <label>Image</label>
+    <div class="mb-3">
+      <input
+        name="image"
+        type="file"
+        accept=".png,.jpg,.jpeg"
+        class="form-control"
+        placeholder="Image"
+        aria-label="Image"
+        aria-describedby="image-addon"
+      />
+    </div>
+    <div class="btn-group d-flex justify-content-center">
+      <input type="submit" value="Save" class="btn btn-success" />
+    </div>
+  </form>
+</div>

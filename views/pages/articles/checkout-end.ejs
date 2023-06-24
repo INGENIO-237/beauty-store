@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="/css/checkout-end.css" />
+
+<div class="container">
+  <div class="row checkout-end">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h2>Hey <%= customer.fname %>,</h2>
+          <p class="fs-sm">
+            These are the details for your purchase of
+            <strong>$<%= customer.total %></strong> you made to BEST BOX TV.
+          </p>
+
+          <div class="border-top border-gray-200 pt-4 mt-4">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-muted mb-2">Purchase No.</div>
+                <strong>#<%= customer.date %></strong>
+              </div>
+            </div>
+
+            <div class="border-top border-gray-200 mt-4 py-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="text-muted mb-2">Client</div>
+                  <strong> <%= customer.fname %> <%= customer.name %> </strong>
+                  <p class="fs-sm">
+                    <%= customer.address %>
+                    <br />
+                    <a href="#!" class="text-purple"> <%= customer.email %> </a>
+                  </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                  <div class="text-muted mb-2">Payment To</div>
+                  <img src="/images/LOGO BOX TV_ 3.png" alt="" width="30%" />
+                  <p class="fs-sm">
+                    9th Avenue, San Francisco 99383
+                    <br />
+                    <a href="#!" class="text-purple">support@bestboxtv.com </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive p-0">
+              <table
+                id="table"
+                class="table align-items-center mb-0"
+                style="width: 100%"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    >
+                      Description
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Quantity
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Unit price
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Amount
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% for(prop in cart){ %>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm"><%= cart[prop].name %></h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs text-secondary mb-0">
+                        <%= cart[prop].quantity %>
+                      </p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">
+                        $<%= cart[prop].price %>
+                      </p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">
+                        $<%= cart[prop].price * cart[prop].quantity %>
+                      </p>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-5">
+              <div class="d-flex justify-content-end">
+                <p class="text-muted me-3">Subtotal:</p>
+                <span>$<%= customer.total %></span>
+              </div>
+              <div class="d-flex justify-content-end">
+                <p class="text-muted me-3">Discount:</p>
+
+                <% let discount = 0 %> <% if(customer.promotion !=undefined){
+                discount=(customer.total *
+                customer.promotion.reduction_prom)/100 } %>
+                <span class="text-info">-$<%= discount %></span>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <h5 class="me-3">Total:</h5>
+                <h5 class="text-success">$<%= customer.total - discount %></h5>
+              </div>
+            </div>
+            <form
+              action="cart/payment"
+              method="POST"
+              class="d-flex justify-content-center"
+            >
+              <script
+                src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="<%= key %>"
+                data-amount="<%= (customer.total - discount) * 100 %>"
+                data-currency="CAD"
+                data-name="<%= customer.fname %> <%= customer.name %>"
+                data-description="Payment for a purchase"
+                data-locale="auto"
+                data-customer="<%= customer %>"
+              ></script>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
