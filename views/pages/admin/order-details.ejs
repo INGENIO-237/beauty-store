@@ -1,0 +1,58 @@
+<div class="container d-flex justify-content-center">
+  <div class="col-md-6 my-3">
+    <div class="card">
+      <div class="card-header pb-0 px-3">
+        <h3 class="mb-0">Details</h3>
+        <form action="/orders/<%= order.id_cmd %>/status" method="post">
+          <div class="d-flex justify-content-end">
+            <button
+              type="submit"
+              class="btn px-3 <%= order.orderdelivered == 0 ? 'text-white btn-success' : 'disabled btn-secondary' %> float-right text-dark text-sm mb-0 px-0 ms-4"
+            >
+              Delivered
+            </button>
+          </div>
+        </form>
+        <h5><%= order.customerfullname %></h5>
+        <h6 class="text-muted"><%= order.email_cli %></h6>
+        <h6 class="text-muted"><%= order.customeraddress %></h6>
+        <p class="text-muted"><%= order.orderdate %></p>
+        <% if(order.orderdelivered == 0){ %>
+        <p class="text-bold text-danger">Pending</p>
+        <% }else{ %>
+        <p class="text-bold text-success">Delivered</p>
+        <% } %>
+      </div>
+      <div class="card-body pt-4 p-3">
+        <ul class="list-group">
+          <% articles.forEach((article) =>{ %>
+          <li
+            class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+          >
+            <div class="d-flex align-items-center">
+              <h6 class="mb-3 text-sm"><%= article.articletitle %></h6>
+            </div>
+            <div class="ms-auto align-items-center text-end">
+              <span
+                class="text-danger text-gradient px-3 mb-0"
+                href="javascript:;"
+                ><%= article.qte %></span
+              >
+              <span class="text-dark px-3 mb-0" href="javascript:;">
+                $<%= article.articleprice %></span
+              >
+            </div>
+          </li>
+          <% }) %>
+          <hr />
+          <div class="row">
+            <div class="col-md-6 text-left text-bold">
+              <h5>TOTAL</h5>
+            </div>
+            <div class="col-md-6 text-end text-bold">$<%= total %></div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

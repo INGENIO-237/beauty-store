@@ -1,0 +1,213 @@
+<!-- Form -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form role="form" enctype="multipart/form-data" method="post" action="">
+          <label>Title</label>
+          <div class="mb-3">
+            <input
+            name="title"
+              type="text"
+              class="form-control"
+              placeholder="Title"
+              aria-label="Title"
+              aria-describedby="title-addon"
+            />
+          </div>
+          <label>Category</label>
+          <div class="mb-3">
+            <select
+              name="category"
+              class="form-control"
+              aria-label="Category"
+              aria-describedby="category-addon"
+            >
+              <% for(let i = 0; i < categories.length; i++){ %>
+              <option value="<%= categories[i].id_cat %>">
+                <%= categories[i].cattitle %>
+              </option>
+              <% } %>
+            </select>
+          </div>
+          <label>Description</label>
+          <div class="mb-3">
+            <textarea
+              name="description"
+              cols="30"
+              rows="4"
+              class="form-control"
+              placeholder="Description"
+              aria-label="Description"
+              aria-describedby="description-addon"
+            ></textarea>
+          </div>
+          <label>Price</label>
+          <div class="mb-3">
+            <input
+            name="price"
+              type="text"
+              class="form-control"
+              placeholder="Price"
+              aria-label="Price"
+              aria-describedby="price-addon"
+            />
+          </div>
+          <label>Image</label>
+          <div class="mb-3">
+            <input
+            name="image"
+              type="file"
+              accept=".png,.jpg,.jpeg"
+              class="form-control"
+              placeholder="Image"
+              aria-label="Image"
+              aria-describedby="image-addon"
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-info">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<!-- Delete Pop up -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <a href="#" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End -->
+
+<div class="container d-flex justify-content-end">
+  <a
+    href=""
+    class="btn btn-success"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+    >+ Product</a
+  >
+</div>
+
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <% if(products.length > 0){ %> <% for(let i = 0; i < products.length;
+      i++){ %>
+      <div class="col">
+        <div class="card shadow-sm">
+          <img
+            src="<%= imageEndpoint %>/<%= products[i].image_art %>"
+            alt=""
+            width="100%"
+            height="225"
+          />
+          <div class="card-body">
+            <h6><%= products[i].articletitle.toUpperCase() %></h6>
+            <div>
+              <p class="text-muted"><%= products[i].cattitle %></p>
+              <h5 class="text-end">$<%= products[i].articleprice %></h5>
+            </div>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+            <div class="d-flex justify-content-end align-items-center">
+              <div class="btn-group">
+                <a
+                  href="/products/<%= products[i].articleid %>"
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                >
+                  Edit
+                </a>
+                <a
+                  href=""
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal<%= products[i].articleid %>"
+                >
+                  Delete
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Delete Pop up -->
+      <div
+      class="modal fade"
+      id="deleteModal<%= products[i].articleid %>"
+      tabindex="-1"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Are you sure ?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a
+              href="/products/delete/<%= products[i].articleid %>"
+              class="btn btn-danger"
+              >Delete</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End -->
+      <% } %> <% }else{ %>
+        <p>No product added</p>
+        <% } %>
+    </div>
+  </div>
+</div>

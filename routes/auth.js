@@ -3,22 +3,35 @@ const bcrypt = require("bcrypt");
 
 const passport = require("passport");
 const db = require("../config/db");
+const { ensureAuthenticated } = require("../config/checkAuth");
 
 // Login
 router.get("/login", (req, res) =>
-  res.render("pages/login", { layout: "layout-2.ejs" })
+  res.render("pages/auth/login", { layout: "layout-2.ejs" })
 );
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/auth/dashboard",
     failureRedirect: "/auth/login",
   })(req, res, next);
 });
 
+// Dashboard
+router.get("/dashboard", ensureAuthenticated, (req, res) => {
+  res.render("pages/admin/dashboard-admin", {
+    layout: "dashboard-layout.ejs",
+  });
+});
+
+// Profile
+router.get("/profile", ensureAuthenticated, (req, res) => {
+  res.render("pages/auth/profile", { layout: "dashboard-layout.ejs" });
+});
+
 // Register
 router.get("/partnership", (req, res) =>
-  res.render("pages/partnership", { layout: "layout-2.ejs" })
+  res.render("pages/auth/partnership", { layout: "layout-2.ejs" })
 );
 
 router.post("/partnership", (req, res) => {
@@ -61,7 +74,7 @@ router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) throw err;
   });
-  res.redirect("/account/login");
+  res.redirect("/auth/login");
 });
 
 module.exports = router;

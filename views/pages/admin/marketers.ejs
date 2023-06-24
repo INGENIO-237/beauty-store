@@ -1,0 +1,231 @@
+<main
+  class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
+>
+  <!-- Form -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Marketer</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="" method="post">
+            <label>Email</label>
+            <div class="mb-3">
+              <input
+                name="email"
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                aria-label="Email"
+                aria-describedby="email-addon"
+              />
+            </div>
+            <label>Password</label>
+            <div class="mb-3">
+              <input
+                name="password"
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                aria-label="Password"
+                aria-describedby="password-addon"
+              />
+            </div>
+            <label>First Name</label>
+            <div class="mb-3">
+              <input
+                name="fname"
+                type="text"
+                class="form-control"
+                placeholder="First Name"
+                aria-label="FName"
+                aria-describedby="fname-addon"
+              />
+            </div>
+            <label>Name</label>
+            <div class="mb-3">
+              <input
+                name="name"
+                type="name"
+                class="form-control"
+                placeholder="Name"
+                aria-label="Name"
+                aria-describedby="name-addon"
+              />
+            </div>
+            <label>Phone</label>
+            <div class="mb-3">
+              <input
+                name="phone"
+                type="tel"
+                class="form-control"
+                placeholder="Phone"
+                aria-label="Phone"
+                aria-describedby="phone-addon"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-info">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End -->
+
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div
+            class="card-header pb-0 d-flex align-items-center justify-content-between"
+          >
+            <h6>Marketers</h6>
+            <a
+              href=""
+              class="btn btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              >+ Marketer</a
+            >
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table
+                id="table"
+                class="table align-items-center mb-0"
+                style="width: 100%"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                    >
+                      Fullname
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Email
+                    </th>
+                    <th
+                      class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                    >
+                      Phone
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% if(marketers.length > 0){ %> <% for(let i = 0; i <
+                  marketers.length; i++){ %>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">
+                            <%= marketers[i].prenom_usr %> <%=
+                            marketers[i].nom_usr %>
+                          </h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs text-secondary mb-0">
+                        <%= marketers[i].email_usr %>
+                      </p>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0">
+                        <%= marketers[i].phone_usr %>
+                      </p>
+                    </td>
+                    <td class="align-middle">
+                      <a
+                        href="/marketers/<%= marketers[i].id_usr %>"
+                        class="text-secondary font-weight-bold text-xs"
+                        data-toggle="tooltip"
+                        data-original-title="Edit Marketer"
+                      >
+                        Edit
+                      </a>
+                      <a
+                        href="javascript:;"
+                        class="mx-3 text-secondary font-weight-bold text-xs"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal<%= marketers[i].id_usr %>"
+                      >
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+
+                  <!-- Delete Pop up -->
+                  <div
+                    class="modal fade"
+                    id="deleteModal<%= marketers[i].id_usr %>"
+                    tabindex="-1"
+                    aria-labelledby="deleteModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <p>Are you sure ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <a
+                            href="/marketers/delete/<%= marketers[i].id_usr %>"
+                            class="btn btn-danger"
+                            >Delete</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End -->
+
+                  <% } %> <% }else{ %>
+                  <tr>
+                    <td colspan="3" class="text-center">
+                      No marketer added yet
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
